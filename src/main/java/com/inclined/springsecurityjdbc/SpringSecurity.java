@@ -20,7 +20,13 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .dataSource(dataSource);
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select username, password, enabled "
+                + "from users "
+                + "where username=?")
+                .authoritiesByUsernameQuery("select username, authority "
+                + "from authorities "
+                + "where username=?");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,7 +36,6 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .and().formLogin();
     }
-
 
     @Bean
     protected PasswordEncoder passwordEncoder() {
