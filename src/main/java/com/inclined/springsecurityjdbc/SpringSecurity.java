@@ -20,18 +20,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .withDefaultSchema()
-                .withUser(
-                        User.withUsername("user")
-                        .password("user")
-                        .roles("USER")
-                )
-                .withUser(
-                        User.withUsername("admin")
-                        .password("admin")
-                        .roles("ADMIN")
-                );
+                .dataSource(dataSource);
     }
 
     protected void configure(HttpSecurity http) throws Exception {
